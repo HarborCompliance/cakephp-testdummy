@@ -13,10 +13,23 @@ Testdummy helps you to create a random set of fake data which you can configure 
 
 ## Step 1: Installation
 
-Install this package using Composer:
+This package is distributed from the HarborCompliance repository (it is not published on Packagist). Add it as a VCS repository in your application's `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/HarborCompliance/cakephp-testdummy.git"
+        }
+    ]
+}
+```
+
+Then require it as a development dependency:
 
 ```bash
-composer require viraj/cakephp-testdummy
+composer require --dev harborcompliance/cakephp-testdummy
 ```
 
 ## Step 2: Create a factories file
