@@ -1,6 +1,10 @@
 .idea/*
 /vendor/*
 /composer.lock
+/.phpunit.cache
+/phpunit.xml
+/phpcs.xml
+/phpstan.neon
 # IDE and editor specific files #
 #################################
 /nbproject

@@ -7,6 +7,8 @@ use Closure;
 use Faker\Generator as Faker;
 use InvalidArgumentException;
 
+use function Cake\Collection\collection;
+
 class Builder
 {
     /**
