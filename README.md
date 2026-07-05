@@ -4,6 +4,13 @@ Testdummy provides an easy way of creating random test data. While writing tests
 
 Testdummy helps you to create a random set of fake data which you can configure exactly according to your needs in the test.
 
+## Requirements
+
+- PHP 8.1+
+- CakePHP 5.3+
+
+> For CakePHP 4.x, use an older release of this package.
+
 ## Step 1: Installation
 
 Install this package using Composer:
@@ -17,7 +24,7 @@ composer require viraj/cakephp-testdummy
 Within the `config/Factories` directory, create a `TableFactory.php` file with the following contents:
 
 ```php
-# config/TableFactory.php
+# config/Factories/TableFactory.php
 
 <?php
 
@@ -45,7 +52,7 @@ $factory->define('Posts', function (Faker\Generator $faker) {
 });
 ```
 
-In `TableFactory.php` you will have access to `$faker` variable which is an instance of the `Generator` class in the Faker package. Using Faker, you can create random data of various types and even get values which are local to your country. Please [read the documentation](https://github.com/fzaninotto/Faker) of Faker to understand their API.
+In `TableFactory.php` you will have access to `$faker` variable which is an instance of the `Generator` class in the Faker package. Using Faker, you can create random data of various types and even get values which are local to your country. Please [read the documentation](https://fakerphp.github.io/) of Faker to understand their API.
 
 ## Step 4: Using Factories
 
@@ -83,14 +90,14 @@ Alternatively, you can use the `DatabaseMigrations` trait which will basically m
 
 namespace App\Test\TestCase;
 
-
+use PHPUnit\Framework\Attributes\Test;
 use TestDummy\Traits\DatabaseMigrations;
 
 class ViewPostListTest extends BaseTestCase
 {
     use DatabaseMigrations;
 
-    /** @test */
+    #[Test]
     public function user_can_see_published_posts()
     {
         factory('Posts')->create(['title' => 'Nate Emmons post']);
@@ -101,7 +108,7 @@ class ViewPostListTest extends BaseTestCase
         $this->assertResponseContains('Megan Danz post');
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_see_unpublished_posts()
     {
         factory('Posts')->create(['title' => 'Nate Emmons post', 'published' => false]);
@@ -133,3 +140,13 @@ $posts = factory('Posts', 100)->create();
 ```
 
 The above code will create 100 post records and return a `Cake\Collection\Collection` instance containing 100 posts
+
+## Running the tests
+
+This package ships with a PHPUnit test suite that runs against an in-memory SQLite database, so no database setup is required.
+
+```bash
+composer install
+composer test    # run the PHPUnit suite
+composer check   # coding standard + static analysis + tests
+```
