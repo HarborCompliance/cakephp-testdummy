@@ -6,7 +6,7 @@ Testdummy helps you to create a random set of fake data which you can configure 
 
 ## Requirements
 
-- PHP 8.1+
+- PHP 8.2+
 - CakePHP 5.3+
 
 > For CakePHP 4.x, use an older release of this package.
