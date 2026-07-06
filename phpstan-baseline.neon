@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method TestDummy\\\\BaseTestCase\\:\\:runDatabaseMigrations\\(\\)\\.$#"
+			count: 1
+			path: src/BaseTestCase.php
+
+		-
+			message: "#^Constant CONFIG not found\\.$#"
+			count: 1
+			path: src/BaseTestCase.php
+
+		-
+			message: "#^Variable \\$entities might not be defined\\.$#"
+			count: 1
+			path: src/Builder.php
+
+		-
+			message: "#^Call to function is_null\\(\\) with static\\(TestDummy\\\\Definition\\) will always evaluate to false\\.$#"
+			count: 1
+			path: src/Definition.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Definition.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(dynamic  class\\|class,name\\|class,amount\\|class,name,amount\\)\\: Unexpected token \"class\", expected variable at offset 110$#"
+			count: 1
+			path: src/helpers.php

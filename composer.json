@@ -1,5 +1,5 @@
 {
-    "name": "viraj/cakephp-testdummy",
+    "name": "harborcompliance/cakephp-testdummy",
     "description": "Factories for CakePHP tests",
     "keywords": [
         "testing",
@@ -8,15 +8,17 @@
         "stubs"
     ],
     "require": {
-        "php": ">=7.2.0",
-        "fakerphp/faker": "~1.4",
-        "symfony/finder": "^3.3",
-        "cakephp/cakephp": "^4.0",
-        "cakephp/chronos": "^2.0",
-        "cakephp/migrations": "^3.0"
+        "php": ">=8.2",
+        "fakerphp/faker": "^1.23",
+        "symfony/finder": "^6.0 || ^7.0",
+        "cakephp/cakephp": "^5.3",
+        "cakephp/chronos": "^3.0",
+        "cakephp/migrations": "^5.0"
     },
     "require-dev": {
-		"phpunit/phpunit": "^5.7|^6.0|^7.0|^8.5"
+        "phpunit/phpunit": "^10.1 || ^11.1",
+        "cakephp/cakephp-codesniffer": "^5.0",
+        "phpstan/phpstan": "^1.11"
     },
     "autoload": {
         "psr-4": {
@@ -26,8 +28,10 @@
             "src/helpers.php"
         ]
     },
-    "conflict": {
-        "phpunit/phpunit": "<5.7"
+    "autoload-dev": {
+        "psr-4": {
+            "TestDummy\\Test\\": "tests"
+        }
     },
     "license": "MIT",
     "authors": [
@@ -35,5 +39,21 @@
             "name": "Viraj Khatavkar",
             "email": "viraj.2438@gmail.com"
         }
-    ]
+    ],
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs --colors -p",
+        "cs-fix": "phpcbf --colors -p",
+        "stan": "phpstan analyse",
+        "check": [
+            "@cs-check",
+            "@stan",
+            "@test"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

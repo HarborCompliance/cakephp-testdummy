@@ -7,6 +7,8 @@ use Closure;
 use Faker\Generator as Faker;
 use InvalidArgumentException;
 
+use function Cake\Collection\collection;
+
 class Builder
 {
     /**
@@ -136,7 +138,7 @@ class Builder
     {
         $attributes = $this->getAttributes($attributes);
 
-        $model = TableRegistry::get($this->class);
+        $model = TableRegistry::getTableLocator()->get($this->class);
         $entity = $model->newEntity($attributes, [
             'validate'         => false,
             'accessibleFields' => ['*' => true],

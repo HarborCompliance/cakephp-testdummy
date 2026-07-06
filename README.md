@@ -4,12 +4,32 @@ Testdummy provides an easy way of creating random test data. While writing tests
 
 Testdummy helps you to create a random set of fake data which you can configure exactly according to your needs in the test.
 
+## Requirements
+
+- PHP 8.2+
+- CakePHP 5.3+
+
+> For CakePHP 4.x, use an older release of this package.
+
 ## Step 1: Installation
 
-Install this package using Composer:
+This package is distributed from the HarborCompliance repository (it is not published on Packagist). Add it as a VCS repository in your application's `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/HarborCompliance/cakephp-testdummy.git"
+        }
+    ]
+}
+```
+
+Then require it as a development dependency:
 
 ```bash
-composer require viraj/cakephp-testdummy
+composer require --dev harborcompliance/cakephp-testdummy
 ```
 
 ## Step 2: Create a factories file
@@ -17,7 +37,7 @@ composer require viraj/cakephp-testdummy
 Within the `config/Factories` directory, create a `TableFactory.php` file with the following contents:
 
 ```php
-# config/TableFactory.php
+# config/Factories/TableFactory.php
 
 <?php
 
@@ -45,11 +65,11 @@ $factory->define('Posts', function (Faker\Generator $faker) {
 });
 ```
 
-In `TableFactory.php` you will have access to `$faker` variable which is an instance of the `Generator` class in the Faker package. Using Faker, you can create random data of various types and even get values which are local to your country. Please [read the documentation](https://github.com/fzaninotto/Faker) of Faker to understand their API.
+In `TableFactory.php` you will have access to `$faker` variable which is an instance of the `Generator` class in the Faker package. Using Faker, you can create random data of various types and even get values which are local to your country. Please [read the documentation](https://fakerphp.github.io/) of Faker to understand their API.
 
 ## Step 4: Using Factories
 
-To use factories, your tests need to extend the `\TestDummy\BaseTestCase`. This class extends the `IntegrationTestCase` present in CakePHP core, so you get access to all the core features and assertions.
+To use factories, your tests need to extend the `\TestDummy\BaseTestCase`. This class extends the `TestCase` present in CakePHP core and applies the `IntegrationTestTrait`, so you get access to all the core features and assertions.
 
 > If you are using the [Integrated](https://github.com/viraj-khatavkar/cakephp-integrated) package, you don't need to extend the `BaseTestCase` Just extend the appropriate class in the [Integrated](https://github.com/viraj-khatavkar/cakephp-integrated) package, and factories will be loaded automatically
 
@@ -83,14 +103,14 @@ Alternatively, you can use the `DatabaseMigrations` trait which will basically m
 
 namespace App\Test\TestCase;
 
-
+use PHPUnit\Framework\Attributes\Test;
 use TestDummy\Traits\DatabaseMigrations;
 
 class ViewPostListTest extends BaseTestCase
 {
     use DatabaseMigrations;
 
-    /** @test */
+    #[Test]
     public function user_can_see_published_posts()
     {
         factory('Posts')->create(['title' => 'Nate Emmons post']);
@@ -101,7 +121,7 @@ class ViewPostListTest extends BaseTestCase
         $this->assertResponseContains('Megan Danz post');
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_see_unpublished_posts()
     {
         factory('Posts')->create(['title' => 'Nate Emmons post', 'published' => false]);
@@ -133,3 +153,13 @@ $posts = factory('Posts', 100)->create();
 ```
 
 The above code will create 100 post records and return a `Cake\Collection\Collection` instance containing 100 posts
+
+## Running the tests
+
+This package ships with a PHPUnit test suite that runs against an in-memory SQLite database, so no database setup is required.
+
+```bash
+composer install
+composer test    # run the PHPUnit suite
+composer check   # coding standard + static analysis + tests
+```
